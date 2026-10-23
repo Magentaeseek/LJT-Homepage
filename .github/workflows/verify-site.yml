@@ -9,15 +9,15 @@ jobs:
     steps:
       - name: Check site
         run: |
-          echo "=== Homepage ==="
-          curl -s -o /dev/null -w "%{http_code}\n" https://magentaeseek.github.io/LJT-Homepage/
-          echo "=== Publications ==="
-          curl -s -o /dev/null -w "%{http_code}\n" https://magentaeseek.github.io/LJT-Homepage/publications/
-          echo "=== CSS ==="
+          echo "=== CSS links in homepage ==="
+          curl -s https://magentaeseek.github.io/LJT-Homepage/ | grep -oE 'href="[^"]*main\.css"' | head -5
+          echo "=== CSS at root ==="
+          curl -s -o /dev/null -w "%{http_code}\n" https://magentaeseek.github.io/assets/css/main.css
+          echo "=== CSS at baseurl ==="
           curl -s -o /dev/null -w "%{http_code}\n" https://magentaeseek.github.io/LJT-Homepage/assets/css/main.css
-          echo "=== Root ==="
-          curl -s -o /dev/null -w "%{http_code}\n" https://magentaeseek.github.io/
-          echo "=== Homepage body (grep) ==="
-          curl -s https://magentaeseek.github.io/LJT-Homepage/ | grep -o 'Junteng Liu' | head -3
-          echo "=== Publications content ==="
-          curl -s https://magentaeseek.github.io/LJT-Homepage/publications/ | grep -o 'SynLogic\|C-Eval\|Truthfulness\|Perception Bottleneck\|In-Context Sharpness\|Composing Parameter' | sort -u
+          echo "=== Nav links ==="
+          curl -s https://magentaeseek.github.io/LJT-Homepage/ | grep -oE 'href="[^"]*publications[^"]*"' | head -5
+          echo "=== Author sidebar ==="
+          curl -s https://magentaeseek.github.io/LJT-Homepage/ | grep -oE 'Junteng Liu|jliugi@connect.ust.hk|Vicent0205|HKUST|MINIMAX' | sort -u
+          echo "=== About sections ==="
+          curl -s https://magentaeseek.github.io/LJT-Homepage/ | grep -oE 'Research Interests|Education|Research Experience|Publications|Awards|Contact' | sort -u
