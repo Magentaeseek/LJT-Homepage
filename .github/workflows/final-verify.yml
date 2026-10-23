@@ -1,0 +1,27 @@
+name: Final Verify
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check site
+        run: |
+          echo "=== Homepage ==="
+          curl -s -o /dev/null -w "%{http_code}\n" https://magentaeseek.github.io/LJT-Homepage/
+          echo "=== Publications ==="
+          curl -s -o /dev/null -w "%{http_code}\n" https://magentaeseek.github.io/LJT-Homepage/publications/
+          echo "=== SynLogic ==="
+          curl -s -o /dev/null -w "%{http_code}\n" https://magentaeseek.github.io/LJT-Homepage/publication/2025-synlogic
+          echo "=== C-Eval ==="
+          curl -s -o /dev/null -w "%{http_code}\n" https://magentaeseek.github.io/LJT-Homepage/publication/2023-c-eval
+          echo "=== CSS ==="
+          curl -s -o /dev/null -w "%{http_code}\n" https://magentaeseek.github.io/LJT-Homepage/assets/css/main.css
+          echo "=== Homepage title ==="
+          curl -s https://magentaeseek.github.io/LJT-Homepage/ | grep -oE '<title>[^<]*</title>'
+          echo "=== Publications on home ==="
+          curl -s https://magentaeseek.github.io/LJT-Homepage/ | grep -oE 'SynLogic|C-Eval|Truthfulness|Perception Bottleneck|In-Context Sharpness|Composing Parameter' | sort -u
+          echo "=== Nav ==="
+          curl -s https://magentaeseek.github.io/LJT-Homepage/ | grep -oE 'href="https://magentaeseek.github.io/LJT-Homepage[^"]*"' | sort -u | head -10
