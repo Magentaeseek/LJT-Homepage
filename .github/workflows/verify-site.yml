@@ -10,10 +10,14 @@ jobs:
       - name: Check site
         run: |
           echo "=== Homepage ==="
-          curl -s -o /dev/null -w "%{http_code}" https://magentaeseek.github.io/LJT-Homepage/
-          echo ""
+          curl -s -o /dev/null -w "%{http_code}\n" https://magentaeseek.github.io/LJT-Homepage/
           echo "=== Publications ==="
-          curl -s -o /dev/null -w "%{http_code}" https://magentaeseek.github.io/LJT-Homepage/publications/
-          echo ""
-          echo "=== Homepage content ==="
-          curl -s https://magentaeseek.github.io/LJT-Homepage/ | head -c 3000
+          curl -s -o /dev/null -w "%{http_code}\n" https://magentaeseek.github.io/LJT-Homepage/publications/
+          echo "=== CSS ==="
+          curl -s -o /dev/null -w "%{http_code}\n" https://magentaeseek.github.io/LJT-Homepage/assets/css/main.css
+          echo "=== Root ==="
+          curl -s -o /dev/null -w "%{http_code}\n" https://magentaeseek.github.io/
+          echo "=== Homepage body (grep) ==="
+          curl -s https://magentaeseek.github.io/LJT-Homepage/ | grep -o 'Junteng Liu' | head -3
+          echo "=== Publications content ==="
+          curl -s https://magentaeseek.github.io/LJT-Homepage/publications/ | grep -o 'SynLogic\|C-Eval\|Truthfulness\|Perception Bottleneck\|In-Context Sharpness\|Composing Parameter' | sort -u
