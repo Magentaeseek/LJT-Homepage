@@ -1,0 +1,19 @@
+name: Verify Site
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check site
+        run: |
+          echo "=== Homepage ==="
+          curl -s -o /dev/null -w "%{http_code}" https://magentaeseek.github.io/LJT-Homepage/
+          echo ""
+          echo "=== Publications ==="
+          curl -s -o /dev/null -w "%{http_code}" https://magentaeseek.github.io/LJT-Homepage/publications/
+          echo ""
+          echo "=== Homepage content ==="
+          curl -s https://magentaeseek.github.io/LJT-Homepage/ | head -c 3000
